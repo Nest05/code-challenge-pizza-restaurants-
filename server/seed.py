@@ -9,7 +9,7 @@ with app.app_context():
 
     r1 = Restaurant(name='Dominion Pizza', address="Good Italian, Ngong Road, 5th Avenue")
     r2 = Restaurant(name='Pizza Hut', address="Westgate Mall, Mwanzi Road, Nrb 100")
-    db.session.add_all([restaurant1, restaurant2])
+    db.session.add_all([r1, r2])
     db.session.commit()
 
     p1 = Pizza(name='Cheese', ingredients="Dough, Tomato Sauce, Cheese")
