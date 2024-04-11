@@ -63,17 +63,45 @@ def restaurant_pizzas():
         return make_response( restaurant_pizzas, 200 )
     
     elif request.method == 'POST':
-        new_restaurant_pizzas = restaurant_pizzas(
-            price=request.form.get("price"),
-            pizza_id=request.form.get("pizza_id"),
-            restaurant_id=request.form.get("restaurant_id"),
-        )
+        try:
+            data = request.get_json()
+            price = data.get('price')
+            pizza_id = data.get('pizza_id')
+            restaurant_id = data.get('restaurant_id')
 
-        db.session.add(new_restaurant_pizzas)
-        db.session.commit()
+            pizza = Pizza.query.get(pizza_id)
+            restaurant = Restaurant.query.get(restaurant_id)
 
-        response = make_response(new_restaurant_pizzas.to_dict(), 201)
-        return response
+            if pizza and restaurant:
+                new_restaurant_pizza = RestaurantPizza(
+                    price=price,
+                    pizza=pizza,
+                    restaurant=restaurant
+                )
+
+                db.session.add(new_restaurant_pizza)
+                db.session.commit()
+
+                response_data = {
+                    'id': pizza.id,
+                    'name': pizza.name,
+                    'ingredients': pizza.ingredients
+                }
+                
+                return make_response(response_data, 201)
+            else:
+                response_data = {
+                    'errors': ['Validation errors']
+                }
+            
+                return make_response(response_data, 400)
+
+        except:
+            response_data = {
+                'errors': ['Validation errors']
+            }
+
+            return make_response(response_data, 400)
 
     
 
