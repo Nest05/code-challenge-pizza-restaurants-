@@ -14,6 +14,11 @@ db.init_app(app)
 @app.route('/')
 def home():
     return '<h1>PIZZA RESTAURANTS CODE CHALLENGE</h1>'
+
+@app.route('/restaurants')
+def restaurants():
+    restaurants = [restaurant.to_dict() for restaurant in Restaurant.query.all()]
+    return make_response(  restaurants,   200  )
     
 
 if __name__ == '__main__':
