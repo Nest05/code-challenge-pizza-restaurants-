@@ -41,7 +41,7 @@ def restaurants_by_id(id):
 
         response_body = {
             "delete_successful": True,
-            "restaurant_pizzas": "Baked good deleted."
+            "restaurant_pizzas": "Restaurant deleted."
         }
 
         response = make_response(
