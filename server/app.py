@@ -41,7 +41,7 @@ def restaurants_by_id(id):
 
         response_body = {
             "delete_successful": True,
-            "message": "Baked good deleted."
+            "restaurant_pizzas": "Baked good deleted."
         }
 
         response = make_response(
@@ -55,6 +55,26 @@ def restaurants_by_id(id):
 def pizzas():
     pizzas = [pizza.to_dict() for pizza in Pizza.query.all()]
     return make_response(  pizzas,   200  )
+
+@app.route('/restaurant_pizzas', methods=['GET', 'POST'])
+def restaurant_pizzas():
+    if request.method == 'GET':
+        restaurant_pizzas = [restaurant_pizzas.to_dict() for restaurant_pizzas in RestaurantPizza.query.all()]
+        return make_response( restaurant_pizzas, 200 )
+    
+    elif request.method == 'POST':
+        new_restaurant_pizzas = restaurant_pizzas(
+            price=request.form.get("price"),
+            pizza_id=request.form.get("pizza_id"),
+            restaurant_id=request.form.get("restaurant_id"),
+        )
+
+        db.session.add(new_restaurant_pizzas)
+        db.session.commit()
+
+        response = make_response(new_restaurant_pizzas.to_dict(), 201)
+        return response
+
     
 
 if __name__ == '__main__':
