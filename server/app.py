@@ -51,6 +51,11 @@ def restaurants_by_id(id):
 
         return response
     
+@app.route('/pizzas')
+def pizzas():
+    pizzas = [pizza.to_dict() for pizza in Pizza.query.all()]
+    return make_response(  pizzas,   200  )
+    
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
