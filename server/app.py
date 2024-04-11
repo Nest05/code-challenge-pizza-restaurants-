@@ -63,45 +63,44 @@ def restaurant_pizzas():
         return make_response( restaurant_pizzas, 200 )
     
     elif request.method == 'POST':
-        try:
-            data = request.get_json()
-            price = data.get('price')
-            pizza_id = data.get('pizza_id')
-            restaurant_id = data.get('restaurant_id')
+        price=request.form.get("price")
+        pizza_id=request.form.get("pizza_id")
+        restaurant_id=request.form.get("restaurant_id")
 
-            pizza = Pizza.query.get(pizza_id)
-            restaurant = Restaurant.query.get(restaurant_id)
+       
+        if pizza_id and restaurant_id:
+            new_restaurant_pizza = RestaurantPizza(
+                price=price,
+                pizza_id=pizza_id,
+                restaurant_id=restaurant_id
+            )
 
-            if pizza and restaurant:
-                new_restaurant_pizza = RestaurantPizza(
-                    price=price,
-                    pizza=pizza,
-                    restaurant=restaurant
-                )
+            db.session.add(new_restaurant_pizza)
+            db.session.commit()
 
-                db.session.add(new_restaurant_pizza)
-                db.session.commit()
+            pizza = Pizza.query.get(pizza_id)  # Fetch the pizza details based on pizza_id
 
+            # Check if pizza exists and prepare the response data
+            if pizza:
                 response_data = {
                     'id': pizza.id,
                     'name': pizza.name,
                     'ingredients': pizza.ingredients
                 }
-                
                 return make_response(response_data, 201)
             else:
                 response_data = {
-                    'errors': ['Validation errors']
+                    'errors': ['Pizza not found']
                 }
-            
-                return make_response(response_data, 400)
-
-        except:
+                return make_response(response_data, 404)
+        else:
             response_data = {
                 'errors': ['Validation errors']
             }
-
+        
             return make_response(response_data, 400)
+
+
 
     
 
