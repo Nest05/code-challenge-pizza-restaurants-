@@ -82,10 +82,12 @@ If the Restaurant does not exist, return the following JSON data, along with the
 {
   "error": "Restaurant not found"
 }
+```
 - GET /pizzas
 
 Return JSON data in the format below:
 
+```json
 [
   {
     "id": 1,
@@ -108,15 +110,17 @@ This route should create a new RestaurantPizza that is associated with an existi
   "pizza_id": 1,
   "restaurant_id": 3
 }
+```
 If the RestaurantPizza is created successfully, send back a response with the data related to the Pizza:
-
+```json
 {
   "id": 1,
   "name": "Cheese",
   "ingredients": "Dough, Tomato Sauce, Cheese"
 }
+```
 If the RestaurantPizza is not created successfully, return the following JSON data, along with the appropriate HTTP status code:
-
+```json
 {
   "errors": ["validation errors"]
 }
