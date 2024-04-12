@@ -24,6 +24,13 @@ def restaurants():
 def restaurants_by_id(id):
 
     restaurant = Restaurant.query.filter_by(id=id).first()
+    if restaurant is None:
+        # Create a response for a non-existent restaurant
+        response_body = {
+            "message": "Restaurant not found."
+        }
+        response = make_response(response_body, 404)  # Use 404 status code for not found
+        return response
 
     if request.method == 'GET':
         restaurant_serialized = restaurant.to_dict()
@@ -41,7 +48,7 @@ def restaurants_by_id(id):
 
         response_body = {
             "delete_successful": True,
-            "restaurant_pizzas": "Restaurant deleted."
+            "restaurant": "Restaurant deleted."
         }
 
         response = make_response(
