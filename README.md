@@ -29,6 +29,7 @@ Set up the following routes. Make sure to return JSON data in the format specifi
 
 Return JSON data in the format below:
 
+```json
 [
   {
     "id": 1,
@@ -41,10 +42,11 @@ Return JSON data in the format below:
     "address": "Westgate Mall, Mwanzi Road, Nrb 100"
   }
 ]
+```
 - GET /restaurants/:id
 
 If the Restaurant exists, return JSON data in the format below:
-
+```json
 {
   "id": 1,
   "name": "Dominion Pizza",
@@ -62,11 +64,13 @@ If the Restaurant exists, return JSON data in the format below:
     }
   ]
 }
+```
 If the Restaurant does not exist, return the following JSON data, along with the appropriate HTTP status code:
-
+```json
 {
   "error": "Restaurant not found"
 }
+```
 - DELETE /restaurants/:id
 
 If the Restaurant exists, it should be removed from the database, along with any RestaurantPizzas that are associated with it (a RestaurantPizza belongs to a Restaurant, so you need to delete the RestaurantPizzas before the Restaurant can be deleted).
@@ -74,7 +78,7 @@ If the Restaurant exists, it should be removed from the database, along with any
 After deleting the Restaurant, return an empty response body, along with the appropriate HTTP status code.
 
 If the Restaurant does not exist, return the following JSON data, along with the appropriate HTTP status code:
-
+```json
 {
   "error": "Restaurant not found"
 }
@@ -94,10 +98,11 @@ Return JSON data in the format below:
     "ingredients": "Dough, Tomato Sauce, Cheese, Pepperoni"
   }
 ]
+```
 - POST /restaurant_pizzas
 
 This route should create a new RestaurantPizza that is associated with an existing Pizza and Restaurant. It should accept an object with the following properties in the body of the request:
-
+```json
 {
   "price": 5,
   "pizza_id": 1,
@@ -115,7 +120,7 @@ If the RestaurantPizza is not created successfully, return the following JSON da
 {
   "errors": ["validation errors"]
 }
-
+```
 ## Installation and Running
 ### Requirements
 - Python > sudo apt install python
